@@ -89,7 +89,6 @@ public class AppIconNameChanger {
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(packageName);
-            //stringBuilder.append("." + activity.getClass().getSimpleName() + "_default");
             stringBuilder.append("." + activity.getClass().getSimpleName() + "__" + defaultIconID);
             activeName = stringBuilder.toString();
 
@@ -102,63 +101,4 @@ public class AppIconNameChanger {
             }
         }
     }
-    /*
-    public void addShortcut(String iconName) {
-        Class mainActivity;
-        Context context = activity.getApplicationContext();
-        String  packageName = context.getPackageName();
-        Intent  launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-        String  className = launchIntent.getComponent().getClassName();
-        //String  className = packageName + "." + activity.getClass().getSimpleName();
-
-        int iconID;
-
-        iconName = iconName.replace(activity.getClass().getSimpleName() + "_", "");
-
-        try {
-            //loading the Main Activity to not import it in the plugin
-            mainActivity = Class.forName(className);
-
-            Intent shortcutIntent = new Intent(activity.getApplicationContext(), mainActivity);
-            shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-            Resources activityRes = activity.getResources();
-
-            // get the id of the icon
-            if (iconName.equals(activity.getClass().getSimpleName() + "_default")) {
-                iconID = activityRes.getIdentifier("ic_launcher", "mipmap", activity.getPackageName());
-            } else {
-                iconID = activity.getResources().getIdentifier(iconName, "drawable", activity.getPackageName());
-            }
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) { // code for adding shortcut on pre oreo device
-                Intent addIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
-                addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-                addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "customizeScreenLayout");
-                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(activity.getApplicationContext(), iconID));
-                addIntent.putExtra("duplicate", false);  //may it's already there so don't duplicate
-                activity.getApplicationContext().sendBroadcast(addIntent);
-            } else {
-                ShortcutManager shortcutManager = activity.getSystemService(ShortcutManager.class);
-                assert shortcutManager != null;
-                if (shortcutManager.isRequestPinShortcutSupported()) {
-                    ShortcutInfo pinShortcutInfo =
-                            new ShortcutInfo.Builder(activity, "browser-shortcut-")
-                                    .setIntent(shortcutIntent)
-                                    .setIcon(Icon.createWithResource(activity, iconID))
-                                    .setShortLabel("title")
-                                    .build();
-
-                    shortcutManager.requestPinShortcut(pinShortcutInfo, null);
-                    System.out.println("added_to_homescreen");
-                } else {
-                    System.out.println("failed_to_add");
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }
