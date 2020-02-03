@@ -15,10 +15,13 @@
 	<img src="https://github.com/kd8ssq/cordova-plugin-app-icon-changer/raw/dev/media/android_demo.gif" width="373px" height="688px" />
 </p>
 
+## Authors
 <p>
-    iOS iconChanger written by Eddy Verbruggen
-    Android IconChanger written by Adam De Lay
+    iOS IconChanger written by <a href="https://github.com/EddyVerbruggen" target="_blank">Eddy Verbruggen</a>
+    <br/>
+    Android IconChanger written by <a href="https://github.com/kd8ssq" target="_blank">Adam De Lay</a>
 </p>
+
 
 ## Installation
 
