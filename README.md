@@ -15,11 +15,15 @@
 	<img src="https://github.com/kd8ssq/cordova-plugin-app-icon-changer/raw/dev/media/android_demo.gif" width="373px" height="688px" />
 </p>
 
+<p>
+    iOS iconChanger written by Eddy Verbruggen
+    Android IconChanger written by Adam De Lay
+</p>
 
 ## Installation
 
 ```
-$ cordova plugin add cordova-plugin-app-icon-changer
+$ cordova plugin add https://github.com/kd8ssq/cordova-plugin-app-icon-changer#dev
 ```
 
 ## API
@@ -115,14 +119,14 @@ We need to somehow refrence what the name of the default icon is.  This will be 
 </config-file>
 ```
 
-In order to change icons, we need to change the default activity so it doesn't display multiple icons for the same app.  Below you will see we delete the default activity titled "MainActivity" and then we rebuild it with no attributes.
+In order to change icons, we need to change the default activity so it doesn't display multiple icons for the same app.  Below you will see we take the default activity entitled "MainActivity" and then we overwrite it with no attributes.  We then remove the Launcher Intent Filter from the default activity to prevet it from being used for Launcher icons (I leave the Main intent-filter in place because some plugins reference that for their use).
 
 ```xml
-<custom-preference name="android-manifest/application/activity[@android:name='.MainActivity']" delete="true" />
+<edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="overwrite">
+    <activity android:name="MainActivity" />
+</edit-config>   
 
-<custom-config-file target="AndroidManifest.xml" parent="./application" mode="add">
-	<activity android:name=".MainActivity" />
-</custom-config-file>
+<custom-preference delete="true" name="android-manifest/application/activity[@android:name='MainActivity']/intent-filter/category[@android:name='android.intent.category.LAUNCHER']" />
 ```
 
 Here's where the different icons are referenced.  We need to create an Activity-Alias for each icon (Look inside the `<config-file target="AndroidManifest.xml" parent="application">` section.  Looking at the first activity-alias below, you will need to note the following things:
@@ -174,51 +178,54 @@ Here is a full example of all the changes you need to add to your config.xml fil
 
 ```xml
 <platform name="android">
+    <!-- copy the new icon to the android drawable folder -->
     <resource-file src="res/appIconChanger/icon_phonegap_60.png" target="app/src/main/res/drawable/icon_phonegap_60.png" />
 
+    <!-- set the default icon name -->
     <config-file target="res/values/strings.xml" parent="/*">
 		<string name="default_icon_id">icon_phonegap_default</string>
 	</config-file>
 
-    <!-- delete current activity -->
-    <custom-preference name="android-manifest/application/activity[@android:name='.MainActivity']" delete="true" />
+    <!-- remove MainActivity attributes -->
+    <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="overwrite">
+        <activity android:name="MainActivity" />
+    </edit-config>   
 
-    <!-- add new activity with no intent-filters -->
-    <custom-config-file target="AndroidManifest.xml" parent="./application" mode="add">
-        <activity android:name=".MainActivity" />
-    </custom-config-file>
+    <!-- remove LAUNCHER intent-filter -->
+    <custom-preference delete="true" name="android-manifest/application/activity[@android:name='MainActivity']/intent-filter/category[@android:name='android.intent.category.LAUNCHER']" />
 
     <config-file target="AndroidManifest.xml" parent="application">
+        <!-- add activity alias for new icon -->
         <activity-alias 
-		android:enabled="false" 
-		android:name=".MainActivity__icon_phonegap_60" 
-		android:icon="@drawable/icon_phonegap_60" 
-		android:label="@string/app_name" 
-		android:targetActivity=".MainActivity" 
-		android:configChanges="orientation|screenSize" 
-		android:noHistory="true">
-		<intent-filter>
-			<action android:name="android.intent.action.MAIN" />
-			<category android:name="android.intent.category.LAUNCHER" />
-		</intent-filter>
-	</activity-alias>
+            android:enabled="false" 
+            android:name=".MainActivity__icon_phonegap_60" 
+            android:icon="@drawable/icon_phonegap_60" 
+            android:label="@string/app_name" 
+            android:targetActivity=".MainActivity" 
+            android:configChanges="orientation|screenSize" 
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
-        <!-- the default activity -->
+        <!-- the default activity alias -->
         <activity-alias 
-		android:enabled="true" 
-		android:name=".MainActivity__icon_phonegap_default" 
-		android:icon="@mipmap/ic_launcher" 
-		android:label="@string/app_name" 
-		android:targetActivity=".MainActivity" 
-		android:configChanges="orientation|screenSize" 
-		android:noHistory="true">
-		<intent-filter>
-			<action android:name="android.intent.action.MAIN"/>
-			<category android:name="android.intent.category.LAUNCHER"/>
-		</intent-filter>
-	</activity-alias>
+            android:enabled="true" 
+            android:name=".MainActivity__icon_phonegap_default" 
+            android:icon="@mipmap/ic_launcher" 
+            android:label="@string/app_name" 
+            android:targetActivity=".MainActivity" 
+            android:configChanges="orientation|screenSize" 
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
     </config-file>           
 </platform>
 ```
 
-> To remove icons from your app, you will need to remove the icon references in your config.xml file and delete them from the res/drawable directory (or the proper directory where you stored your icons).
+> I've found the best way to remove icons from the app is to remove the entries from the config.xml file, then remove and re-add the android platform.  Cordova will throw an error message if it tries to build an app where the icons are referenced in the AndroidManifest.xml file but the icons don't actually exist.
