@@ -26,7 +26,7 @@
 ## Installation
 
 ```
-$ cordova plugin add https://github.com/kd8ssq/cordova-plugin-app-icon-changer.git#dev
+$ cordova plugin add https://github.com/kd8ssq/cordova-plugin-app-icon-changer.git
 ```
 
 ## API
