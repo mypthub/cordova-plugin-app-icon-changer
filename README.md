@@ -49,7 +49,7 @@ AppIconChanger.isSupported(
 
 To be able to switch to a different icon add it to your Xcode project as explained below and pass `iconName` to `changeIcon`.
 
-Note 1: iOS will notify the user the icon changed, but this plugin allows you to suppress that message (it's the default even). It's probably not what Apple would like you to do, but no apps have been disapproved with suppression enabled.
+Note 1: iOS will notify the user the icon changed, but this plugin allows you to suppress that message (it's the default even). It's probably not what Apple would like you to do, but no apps have been disapproved with suppression enabled.  There have been some consistency issues in whether or not the message will be suppressed.
 
 Note 2: Changing the app icon is only allowed when the app is in the foreground, so forget about that weather app which silently updates its app icon.
 
