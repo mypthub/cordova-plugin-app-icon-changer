@@ -21,7 +21,6 @@
             android:contentDescription="App Icon"
             android:src="@mipmap/ic_launcher" />
 
-
         <TextView
             android:id="@+id/appIconChangerDialog_appIconText"
             android:layout_width="match_parent"
