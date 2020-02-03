@@ -12,7 +12,7 @@
 
 <p float="left">
 	<img src="https://github.com/EddyVerbruggen/cordova-plugin-app-icon-changer/raw/master/media/demo.gif" width="373px" height="688px" />
-	<img src="https://github.com/kd8ssq/cordova-plugin-app-icon-changer/raw/dev/media/android_demo.gif" width="373px" height="688px" />
+	<img src="https://github.com/kd8ssq/cordova-plugin-app-icon-changer/raw/master/media/android_demo.gif" width="373px" height="688px" />
 </p>
 
 ## Authors
