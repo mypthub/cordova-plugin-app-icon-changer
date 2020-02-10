@@ -1,5 +1,5 @@
 {
-  "name": "cordova-plugin-app-icon-changer",
+  "name": "@mypthub/cordova-plugin-app-icon-changer",
   "version": "1.0.0",
   "description": "Change the homescreen icon of your app from code.",
   "cordova": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EddyVerbruggen/cordova-plugin-app-icon-changer.git"
+    "url": "git+https://github.com/mypthub/cordova-plugin-app-icon-changer.git"
   },
   "keywords": [
     "Icon Changer",
@@ -28,7 +28,10 @@
   "author": "Eddy Verbruggen <eddyverbruggen@gmail.com> (https://github.com/EddyVerbruggen)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EddyVerbruggen/cordova-plugin-app-icon-changer/issues"
+    "url": "https://github.com/mypthub/cordova-plugin-app-icon-changer/issues"
   },
-  "homepage": "https://github.com/EddyVerbruggen/cordova-plugin-app-icon-changer#readme"
+  "homepage": "https://github.com/mypthub/cordova-plugin-app-icon-changer#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
